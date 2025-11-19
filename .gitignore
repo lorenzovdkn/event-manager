@@ -1,20 +1,21 @@
+# Fichiers d'environnement locaux
+.env.dev
+.env.local
+.env.local.php
+.env.*.local
 
-###> symfony/framework-bundle ###
-/.env.local
-/.env.local.php
-/.env.*.local
-/config/secrets/prod/prod.decrypt.private.php
-/public/bundles/
+# Cache, logs et vendor
 /var/
 /vendor/
-###< symfony/framework-bundle ###
 
-###> phpunit/phpunit ###
+# Secrets (production)
+/config/secrets/prod/prod.decrypt.private.php
+
+# PHPUnit
 /phpunit.xml
 /.phpunit.cache/
-###< phpunit/phpunit ###
 
-###> symfony/asset-mapper ###
+# Symfony assets
+/public/bundles/
 /public/assets/
 /assets/vendor/
-###< symfony/asset-mapper ###
