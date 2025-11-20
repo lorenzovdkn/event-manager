@@ -24,8 +24,17 @@ services:
       - database
     environment:
       DATABASE_URL: "postgresql://app:!ChangeMe!@database:5432/app?serverVersion=16&charset=utf8"
-    command: ["tail", "-f", "/dev/null"]
-
+    
+  nginx:
+    image: nginx:latest
+    container_name: symfony_nginx
+    ports:
+      - "8080:80"
+    volumes:
+      - ./:/var/www/html
+      - ./docker/nginx/conf.d:/etc/nginx/conf.d
+    depends_on:
+      - php
 
 volumes:
   ###> doctrine/doctrine-bundle ###
