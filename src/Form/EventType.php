@@ -17,15 +17,7 @@ class EventType extends AbstractType
             ->add('titre')
             ->add('description')
             ->add('date')
-            ->add('lieu')
-            ->add('createdAt', null, [
-                'widget' => 'single_text',
-            ])
-            ->add('createdBy', EntityType::class, [
-                'class' => User::class,
-                'choice_label' => 'name',
-            ])
-        ;
+            ->add('lieu');
     }
 
     public function configureOptions(OptionsResolver $resolver): void

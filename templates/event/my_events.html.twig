@@ -1,0 +1,20 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Mes événements{% endblock %}
+
+{% block body %}
+<h1>Mes événements</h1>
+
+<a class="btn btn-primary" href="{{ path('app_event_new') }}">Créer un nouvel événement</a>
+
+<ul>
+  {% for event in events %}
+    <li>
+      {{ event.titre }} - {{ event.date|date('d/m/Y') }} - {{ event.lieu }}
+      <!-- Ici tu pourras ajouter boutons modifier / supprimer -->
+    </li>
+  {% else %}
+    <li>Vous n'avez créé aucun événement.</li>
+  {% endfor %}
+</ul>
+{% endblock %}

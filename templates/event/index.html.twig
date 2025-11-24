@@ -1,0 +1,15 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Tous les événements{% endblock %}
+
+{% block body %}
+<h1>Tous les événements</h1>
+
+<ul>
+  {% for event in events %}
+    <li>{{ event.titre }} - {{ event.date|date('d/m/Y') }} - {{ event.lieu }}</li>
+  {% else %}
+    <li>Aucun événement pour le moment.</li>
+  {% endfor %}
+</ul>
+{% endblock %}
