@@ -1,0 +1,81 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}{{ event.titre }}{% endblock %}
+
+{% block body %}
+<div class="row justify-content-center">
+    <div class="col-lg-10">
+        <nav aria-label="breadcrumb" class="mb-4">
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item"><a href="{{ path('app_home') }}"><i class="bi bi-house-door me-1"></i>Accueil</a></li>
+                <li class="breadcrumb-item"><a href="{{ path('app_events') }}">Événements</a></li>
+                <li class="breadcrumb-item active">{{ event.titre }}</li>
+            </ol>
+        </nav>
+
+        <div class="card shadow-lg">
+            {% if event.image %}
+                <img src="{{ asset('uploads/' ~ event.image) }}" class="card-img-top" alt="{{ event.titre }}" style="max-height: 450px; object-fit: cover;">
+            {% else %}
+                <div class="card-img-top bg-gradient d-flex align-items-center justify-content-center" style="height: 450px; background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);">
+                    <i class="bi bi-calendar-event text-white" style="font-size: 6rem; opacity: 0.3;"></i>
+                </div>
+            {% endif %}
+            
+            <div class="card-body p-4 p-md-5">
+                <div class="d-flex justify-content-between align-items-start mb-4">
+                    <div>
+                        <h1 class="display-5 fw-bold mb-3">{{ event.titre }}</h1>
+                        
+                        <div class="d-flex flex-wrap gap-2 mb-3">
+                            <span class="badge bg-primary fs-6">
+                                <i class="bi bi-calendar3 me-1"></i>{{ event.date|date('d/m/Y à H:i') }}
+                            </span>
+                            <span class="badge bg-secondary fs-6">
+                                <i class="bi bi-geo-alt-fill me-1"></i>{{ event.lieu }}
+                            </span>
+                        </div>
+                    </div>
+                    
+                    {% if app.user and app.user == event.createdBy %}
+                        <div class="btn-group">
+                            <a href="#" class="btn btn-warning">
+                                <i class="bi bi-pencil me-1"></i>Modifier
+                            </a>
+                            <a href="#" class="btn btn-danger">
+                                <i class="bi bi-trash me-1"></i>Supprimer
+                            </a>
+                        </div>
+                    {% endif %}
+                </div>
+
+                <hr class="my-4">
+
+                <div class="mb-4">
+                    <h4 class="mb-3"><i class="bi bi-info-circle me-2"></i>Description</h4>
+                    <p class="lead text-muted" style="line-height: 1.8;">{{ event.description }}</p>
+                </div>
+
+                <hr class="my-4">
+
+                <div class="d-flex justify-content-between align-items-center">
+                    <div class="d-flex align-items-center">
+                        <div class="bg-primary bg-opacity-10 rounded-circle p-3 me-3">
+                            <i class="bi bi-person-circle text-primary fs-3"></i>
+                        </div>
+                        <div>
+                            <small class="text-muted d-block">Organisé par</small>
+                            <strong>{{ event.createdBy.name ?: event.createdBy.email }}</strong>
+                            <small class="text-muted d-block">Le {{ event.createdAt|date('d/m/Y') }}</small>
+                        </div>
+                    </div>
+                    
+                    <a href="{{ path('app_events') }}" class="btn btn-outline-secondary">
+                        <i class="bi bi-arrow-left me-1"></i>Retour aux événements
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

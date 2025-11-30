@@ -3,13 +3,56 @@
 {% block title %}Tous les événements{% endblock %}
 
 {% block body %}
-<h1>Tous les événements</h1>
+<div class="page-header d-flex justify-content-between align-items-center mb-4">
+    <div>
+        <h1><i class="bi bi-calendar-event me-2"></i>Tous les événements</h1>
+        <p class="text-muted mb-0">Découvrez les événements à venir</p>
+    </div>
+    {% if is_granted('IS_AUTHENTICATED_FULLY') %}
+        <a href="{{ path('app_event_new') }}" class="btn btn-primary">
+            <i class="bi bi-plus-circle me-1"></i>Créer un événement
+        </a>
+    {% endif %}
+</div>
 
-<ul>
+<div class="row g-4">
   {% for event in events %}
-    <li>{{ event.titre }} - {{ event.date|date('d/m/Y') }} - {{ event.lieu }}</li>
+    <div class="col-md-6 col-lg-4">
+      <div class="card h-100">
+        {% if event.image %}
+          <img src="{{ asset('uploads/' ~ event.image) }}" class="card-img-top" alt="{{ event.titre }}" style="height: 220px; object-fit: cover;">
+        {% else %}
+          <div class="card-img-top bg-gradient d-flex align-items-center justify-content-center" style="height: 220px; background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);">
+            <i class="bi bi-image text-white" style="font-size: 3rem; opacity: 0.5;"></i>
+          </div>
+        {% endif %}
+        <div class="card-body d-flex flex-column">
+          <h5 class="card-title mb-3">{{ event.titre }}</h5>
+          <p class="card-text text-muted mb-3 flex-grow-1">
+            {{ event.description|length > 120 ? event.description|slice(0, 120) ~ '...' : event.description }}
+          </p>
+          <div class="mb-3">
+            <div class="d-flex align-items-center mb-2">
+              <i class="bi bi-calendar3 text-primary me-2"></i>
+              <small class="text-muted">{{ event.date|date('d/m/Y à H:i') }}</small>
+            </div>
+            <div class="d-flex align-items-center">
+              <i class="bi bi-geo-alt text-primary me-2"></i>
+              <small class="text-muted">{{ event.lieu }}</small>
+            </div>
+          </div>
+          <a href="{{ path('app_event_show', {id: event.id}) }}" class="btn btn-outline-primary w-100">
+            <i class="bi bi-arrow-right-circle me-1"></i>Voir les détails
+          </a>
+        </div>
+      </div>
+    </div>
   {% else %}
-    <li>Aucun événement pour le moment.</li>
+    <div class="col-12">
+      <div class="alert alert-info text-center" role="alert">
+        <i class="bi bi-info-circle me-2"></i>Aucun événement disponible pour le moment.
+      </div>
+    </div>
   {% endfor %}
-</ul>
+</div>
 {% endblock %}

@@ -20,6 +20,8 @@ services:
     container_name: symfony_php
     volumes:
       - ./:/var/www/html
+      - vendor_data:/var/www/html/vendor
+      - symfony_var:/var/www/html/var
     depends_on:
       - database
     environment:
@@ -40,3 +42,5 @@ volumes:
   ###> doctrine/doctrine-bundle ###
   database_data:
   ###< doctrine/doctrine-bundle ###
+  vendor_data:
+  symfony_var:

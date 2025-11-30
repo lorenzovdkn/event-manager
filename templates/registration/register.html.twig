@@ -1,20 +1,115 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Register{% endblock %}
+{% block title %}Inscription{% endblock %}
 
 {% block body %}
-    <h1>Register</h1>
+<div class="row justify-content-center">
+    <div class="col-md-6 col-lg-5">
+        <div class="text-center mb-4">
+            <div class="bg-primary bg-opacity-10 rounded-circle d-inline-flex p-4 mb-3">
+                <i class="bi bi-person-plus-fill text-primary" style="font-size: 3rem;"></i>
+            </div>
+            <h1 class="h2 mb-2">Créer un compte</h1>
+            <p class="text-muted">Rejoignez EventManager pour gérer vos événements</p>
+        </div>
 
-    {{ form_errors(registrationForm) }}
+        <div class="card shadow">
+            <div class="card-body p-4">
+                {{ form_start(registrationForm) }}
+                
+                    <div class="mb-3">
+                        {{ form_label(registrationForm.name, 'Nom complet', {'label_attr': {'class': 'form-label fw-bold'}}) }}
+                        {{ form_widget(registrationForm.name, {'attr': {'class': 'form-control form-control-lg', 'placeholder': 'Votre nom'}}) }}
+                        {{ form_errors(registrationForm.name) }}
+                    </div>
 
-    {{ form_start(registrationForm) }}
-        {{ form_row(registrationForm.email) }}
-        {{ form_row(registrationForm.plainPassword, {
-            label: 'Password'
-            
-        }) }}
-        {{ form_row(registrationForm.agreeTerms) }}
+                    <div class="mb-3">
+                        {{ form_label(registrationForm.email, 'Adresse e-mail', {'label_attr': {'class': 'form-label fw-bold'}}) }}
+                        {{ form_widget(registrationForm.email, {'attr': {'class': 'form-control form-control-lg', 'placeholder': 'vous@exemple.com'}}) }}
+                        {{ form_errors(registrationForm.email) }}
+                    </div>
 
-        <button type="submit" class="btn">Register</button>
-    {{ form_end(registrationForm) }}
+                    <div class="mb-3">
+                        {{ form_label(registrationForm.plainPassword, null, {'label_attr': {'class': 'form-label fw-bold'}}) }}
+                        <div class="position-relative">
+                            {{ form_widget(registrationForm.plainPassword, {
+                                'attr': {
+                                    'class': 'form-control form-control-lg pe-5',
+                                    'placeholder': '••••••••',
+                                    'id': 'password_first'
+                                }
+                            }) }}
+                            <button type="button" class="btn btn-link position-absolute end-0 top-50 translate-middle-y text-muted" 
+                                    onclick="togglePassword('password_first', this)" style="z-index: 10; text-decoration: none;">
+                                <i class="bi bi-eye"></i>
+                            </button>
+                        </div>
+                        {{ form_errors(registrationForm.plainPassword) }}
+                    </div>
+
+                    <div class="mb-3">
+                        {{ form_label(registrationForm.confirmPassword, null, {'label_attr': {'class': 'form-label fw-bold'}}) }}
+                        <div class="position-relative">
+                            {{ form_widget(registrationForm.confirmPassword, {
+                                'attr': {
+                                    'class': 'form-control form-control-lg pe-5',
+                                    'placeholder': '••••••••',
+                                    'id': 'password_second'
+                                }
+                            }) }}
+                            <button type="button" class="btn btn-link position-absolute end-0 top-50 translate-middle-y text-muted" 
+                                    onclick="togglePassword('password_second', this)" style="z-index: 10; text-decoration: none;">
+                                <i class="bi bi-eye"></i>
+                            </button>
+                        </div>
+                        {{ form_errors(registrationForm.confirmPassword) }}
+                        <small class="form-text text-muted">
+                            <i class="bi bi-info-circle me-1"></i>
+                            Minimum 8 caractères avec majuscule, chiffre et caractère spécial
+                        </small>
+                    </div>
+
+                    <div class="mb-4">
+                        <div class="form-check">
+                            {{ form_widget(registrationForm.agreeTerms, {'attr': {'class': 'form-check-input'}}) }}
+                            {{ form_label(registrationForm.agreeTerms, null, {'label_attr': {'class': 'form-check-label'}}) }}
+                        </div>
+                        {{ form_errors(registrationForm.agreeTerms) }}
+                    </div>
+
+                    <div class="d-grid mb-3">
+                        <button type="submit" class="btn btn-primary btn-lg">
+                            <i class="bi bi-check-circle me-1"></i>Créer mon compte
+                        </button>
+                    </div>
+
+                    <div class="text-center">
+                        <small class="text-muted">
+                            Vous avez déjà un compte ? 
+                            <a href="{{ path('app_login') }}" class="text-decoration-none">Connectez-vous</a>
+                        </small>
+                    </div>
+
+                {{ form_end(registrationForm) }}
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+function togglePassword(fieldId, button) {
+    const field = document.getElementById(fieldId);
+    const icon = button.querySelector('i');
+    
+    if (field.type === 'password') {
+        field.type = 'text';
+        icon.classList.remove('bi-eye');
+        icon.classList.add('bi-eye-slash');
+    } else {
+        field.type = 'password';
+        icon.classList.remove('bi-eye-slash');
+        icon.classList.add('bi-eye');
+    }
+}
+</script>
 {% endblock %}
