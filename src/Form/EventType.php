@@ -17,7 +17,18 @@ class EventType extends AbstractType
             ->add('titre')
             ->add('description')
             ->add('date')
-            ->add('lieu');
+            ->add('lieu')
+            ->add('imageFile', FileType::class, [
+                'mapped' => false,
+                'required' => false,
+                'constraints' => [
+                    new File([
+                        'maxSize' => '5M',
+                        'mimeTypes' => ['image/jpeg', 'image/png', 'image/webp'],
+                        'mimeTypesMessage' => 'Veuillez uploader une image valide.',
+                    ])
+                ]
+            ]);
     }
 
     public function configureOptions(OptionsResolver $resolver): void

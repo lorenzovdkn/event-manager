@@ -43,6 +43,19 @@ class EventController extends AbstractController
 
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()) {
+            $file = $form->get('imageFile')->getData();
+
+            if ($file) {
+                $filename = uniqid() . '.' . $file->guessExtension();
+
+                $file->move(
+                    $this->getParameter('uploads_directory'),
+                    $filename
+                );
+
+                $event->setImage($filename);
+            }
+            
             $event->setCreatedBy($this->getUser());
             $event->setCreatedAt(new \DateTimeImmutable());
             $em->persist($event);
