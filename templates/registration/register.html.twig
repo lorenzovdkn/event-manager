@@ -35,12 +35,11 @@
                             {{ form_widget(registrationForm.plainPassword, {
                                 'attr': {
                                     'class': 'form-control form-control-lg pe-5',
-                                    'placeholder': '••••••••',
-                                    'id': 'password_first'
+                                    'placeholder': '••••••••'
                                 }
                             }) }}
                             <button type="button" class="btn btn-link position-absolute end-0 top-50 translate-middle-y text-muted" 
-                                    onclick="togglePassword('password_first', this)" style="z-index: 10; text-decoration: none;">
+                                    onclick="togglePasswordField(this)" style="z-index: 10; text-decoration: none;">
                                 <i class="bi bi-eye"></i>
                             </button>
                         </div>
@@ -57,12 +56,11 @@
                             {{ form_widget(registrationForm.confirmPassword, {
                                 'attr': {
                                     'class': 'form-control form-control-lg pe-5',
-                                    'placeholder': '••••••••',
-                                    'id': 'password_second'
+                                    'placeholder': '••••••••'
                                 }
                             }) }}
                             <button type="button" class="btn btn-link position-absolute end-0 top-50 translate-middle-y text-muted" 
-                                    onclick="togglePassword('password_second', this)" style="z-index: 10; text-decoration: none;">
+                                    onclick="togglePasswordField(this)" style="z-index: 10; text-decoration: none;">
                                 <i class="bi bi-eye"></i>
                             </button>
                         </div>
@@ -97,8 +95,16 @@
 </div>
 
 <script>
-function togglePassword(fieldId, button) {
-    const field = document.getElementById(fieldId);
+function togglePasswordField(button) {
+    const container = button.parentElement;
+    
+    const field = container.querySelector('input');
+    
+    if (!field) {
+        console.error('Field not found', container);
+        return;
+    }
+    
     const icon = button.querySelector('i');
     
     if (field.type === 'password') {
