@@ -23,7 +23,8 @@ services:
       - vendor_data:/var/www/html/vendor
       - symfony_var:/var/www/html/var
     depends_on:
-      - database
+      database:
+        condition: service_healthy
     environment:
       DATABASE_URL: "postgresql://app:!ChangeMe!@database:5432/app?serverVersion=16&charset=utf8"
     

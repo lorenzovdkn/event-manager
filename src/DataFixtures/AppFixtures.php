@@ -114,9 +114,9 @@ class AppFixtures extends Fixture
 
         $manager->flush();
 
-        echo "\n✅ Fixtures chargées avec succès!\n";
-        echo "📧 3 utilisateurs créés (user1@example.com, user2@example.com, user3@example.com)\n";
-        echo "🔑 Mot de passe pour tous: password123\n";
-        echo "📅 15 événements créés avec dates, heures et lieux\n\n";
+        echo "\nFixtures chargées avec succès!\n";
+        echo "3 utilisateurs créés (user1@example.com, user2@example.com, user3@example.com)\n";
+        echo "Mot de passe pour tous: password123\n";
+        echo "15 événements créés avec dates, heures et lieux\n\n";
     }
 }
