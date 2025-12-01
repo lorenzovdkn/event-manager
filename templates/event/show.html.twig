@@ -31,6 +31,11 @@
                             <span class="badge bg-primary fs-6">
                                 <i class="bi bi-calendar3 me-1"></i>{{ event.date|date('d/m/Y à H:i') }}
                             </span>
+                            {% if event.dateFin %}
+                            <span class="badge bg-info fs-6">
+                                <i class="bi bi-arrow-right me-1"></i>{{ event.dateFin|date('d/m/Y à H:i') }}
+                            </span>
+                            {% endif %}
                             <span class="badge bg-secondary fs-6">
                                 <i class="bi bi-geo-alt-fill me-1"></i>{{ event.lieu }}
                             </span>
@@ -39,12 +44,12 @@
                     
                     {% if app.user and app.user == event.createdBy %}
                         <div class="btn-group">
-                            <a href="#" class="btn btn-warning">
+                            <a href="{{ path('app_event_edit', {id: event.id}) }}" class="btn btn-warning">
                                 <i class="bi bi-pencil me-1"></i>Modifier
                             </a>
-                            <a href="#" class="btn btn-danger">
+                            <button type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#deleteModal">
                                 <i class="bi bi-trash me-1"></i>Supprimer
-                            </a>
+                            </button>
                         </div>
                     {% endif %}
                 </div>
@@ -54,6 +59,49 @@
                 <div class="mb-4">
                     <h4 class="mb-3"><i class="bi bi-info-circle me-2"></i>Description</h4>
                     <p class="lead text-muted" style="line-height: 1.8;">{{ event.description }}</p>
+                </div>
+
+                <hr class="my-4">
+
+                <div class="mb-4">
+                    <h4 class="mb-3"><i class="bi bi-people me-2"></i>Participants</h4>
+                    <div class="alert alert-info d-flex align-items-center">
+                        <i class="bi bi-person-check-fill fs-3 me-3"></i>
+                        <div>
+                            <strong class="d-block">{{ event.nombreInscrits }} personne(s) inscrite(s)</strong>
+                            {% if app.user %}
+                                {% if event.isUserInscrit(app.user) %}
+                                    <small class="text-success">
+                                        <i class="bi bi-check-circle-fill me-1"></i>Vous êtes inscrit à cet événement
+                                    </small>
+                                {% else %}
+                                    <small>Rejoignez cet événement dès maintenant !</small>
+                                {% endif %}
+                            {% endif %}
+                        </div>
+                    </div>
+
+                    {% if app.user and app.user != event.createdBy %}
+                        {% if event.isUserInscrit(app.user) %}
+                            <form method="post" action="{{ path('app_event_desinscrire', {id: event.id}) }}" class="d-inline">
+                                <input type="hidden" name="_token" value="{{ csrf_token('desinscrire' ~ event.id) }}">
+                                <button type="submit" class="btn btn-warning btn-lg">
+                                    <i class="bi bi-person-dash me-2"></i>Se désinscrire
+                                </button>
+                            </form>
+                        {% else %}
+                            <form method="post" action="{{ path('app_event_inscrire', {id: event.id}) }}" class="d-inline">
+                                <input type="hidden" name="_token" value="{{ csrf_token('inscrire' ~ event.id) }}">
+                                <button type="submit" class="btn btn-success btn-lg">
+                                    <i class="bi bi-person-plus me-2"></i>S'inscrire à cet événement
+                                </button>
+                            </form>
+                        {% endif %}
+                    {% elseif not app.user %}
+                        <a href="{{ path('app_login') }}" class="btn btn-primary btn-lg">
+                            <i class="bi bi-box-arrow-in-right me-2"></i>Se connecter pour s'inscrire
+                        </a>
+                    {% endif %}
                 </div>
 
                 <hr class="my-4">
@@ -74,6 +122,35 @@
                         <i class="bi bi-arrow-left me-1"></i>Retour aux événements
                     </a>
                 </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Modal de confirmation de suppression -->
+<div class="modal fade" id="deleteModal" tabindex="-1" aria-labelledby="deleteModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header bg-danger text-white">
+                <h5 class="modal-title" id="deleteModalLabel">
+                    <i class="bi bi-exclamation-triangle me-2"></i>Confirmer la suppression
+                </h5>
+                <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <p class="mb-0">Êtes-vous sûr de vouloir supprimer l'événement <strong>{{ event.titre }}</strong> ?</p>
+                <p class="text-muted mb-0 mt-2">Cette action est irréversible.</p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
+                    <i class="bi bi-x-circle me-1"></i>Annuler
+                </button>
+                <form method="post" action="{{ path('app_event_delete', {id: event.id}) }}" style="display: inline;">
+                    <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ event.id) }}">
+                    <button type="submit" class="btn btn-danger">
+                        <i class="bi bi-trash me-1"></i>Supprimer définitivement
+                    </button>
+                </form>
             </div>
         </div>
     </div>

@@ -119,6 +119,7 @@
 
         {% if is_granted('IS_AUTHENTICATED_FULLY') %}
           <li class="nav-item"><a class="nav-link" href="{{ path('app_my_events') }}"><i class="bi bi-bookmark me-1"></i>Mes événements</a></li>
+          <li class="nav-item"><a class="nav-link" href="{{ path('app_my_inscriptions') }}"><i class="bi bi-ticket-perforated me-1"></i>Mes inscriptions</a></li>
           <li class="nav-item"><a class="nav-link" href="{{ path('app_event_new') }}"><i class="bi bi-plus-circle me-1"></i>Créer</a></li>
         {% endif %}
       </ul>

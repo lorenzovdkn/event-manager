@@ -27,6 +27,10 @@ class EventType extends AbstractType
                     ])
                 ],
             ])
+            ->add('dateFin', null, [
+                'required' => false,
+                'label' => 'Date et heure de fin',
+            ])
             ->add('lieu')
             ->add('imageFile', FileType::class, [
                 'mapped' => false,

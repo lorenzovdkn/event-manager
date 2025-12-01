@@ -1,0 +1,122 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Modifier l'événement{% endblock %}
+
+{% block body %}
+<div class="page-header mb-4">
+  <nav aria-label="breadcrumb">
+    <ol class="breadcrumb">
+      <li class="breadcrumb-item"><a href="{{ path('app_home') }}"><i class="bi bi-house-door"></i> Accueil</a></li>
+      <li class="breadcrumb-item"><a href="{{ path('app_my_events') }}">Mes événements</a></li>
+      <li class="breadcrumb-item active" aria-current="page">Modifier</li>
+    </ol>
+  </nav>
+  <h1><i class="bi bi-pencil-square me-2"></i>Modifier l'événement</h1>
+  <p class="text-muted mb-0">Modifiez les informations de votre événement</p>
+</div>
+
+<div class="row justify-content-center">
+  <div class="col-lg-8">
+    <div class="card shadow-sm">
+      <div class="card-body p-4">
+        {{ form_start(form) }}
+        
+        <div class="mb-4">
+          <h5 class="border-bottom pb-2 mb-3">
+            <i class="bi bi-info-circle text-primary me-2"></i>Informations générales
+          </h5>
+          
+          <div class="mb-3">
+            {{ form_label(form.titre, 'Titre de l\'événement', {'label_attr': {'class': 'form-label fw-bold'}}) }}
+            {{ form_widget(form.titre, {'attr': {'class': 'form-control', 'placeholder': 'Ex: Conférence Tech 2024'}}) }}
+            {{ form_errors(form.titre) }}
+          </div>
+
+          <div class="mb-3">
+            {{ form_label(form.description, 'Description', {'label_attr': {'class': 'form-label fw-bold'}}) }}
+            {{ form_widget(form.description, {'attr': {'class': 'form-control', 'rows': '4', 'placeholder': 'Décrivez votre événement en détail...'}}) }}
+            {{ form_errors(form.description) }}
+            <small class="form-text text-muted">
+              <i class="bi bi-info-circle"></i> Une bonne description aide les participants à comprendre l'événement
+            </small>
+          </div>
+        </div>
+
+        <div class="mb-4">
+          <h5 class="border-bottom pb-2 mb-3">
+            <i class="bi bi-calendar-event text-primary me-2"></i>Date et lieu
+          </h5>
+          
+          <div class="mb-3">
+            {{ form_label(form.date, 'Date et heure de début', {'label_attr': {'class': 'form-label fw-bold'}}) }}
+            {{ form_widget(form.date, {'attr': {'class': 'form-control'}}) }}
+            {{ form_errors(form.date) }}
+            <small class="form-text text-muted">
+              <i class="bi bi-info-circle"></i> La date doit être dans le futur
+            </small>
+          </div>
+
+          <div class="mb-3">
+            {{ form_label(form.dateFin, 'Date et heure de fin (optionnelle)', {'label_attr': {'class': 'form-label fw-bold'}}) }}
+            {{ form_widget(form.dateFin, {'attr': {'class': 'form-control'}}) }}
+            {{ form_errors(form.dateFin) }}
+            <small class="form-text text-muted">
+              <i class="bi bi-info-circle"></i> Laissez vide si événement ponctuel
+            </small>
+          </div>
+
+          <div class="mb-3">
+            {{ form_label(form.dateFin, 'Date et heure de fin (optionnelle)', {'label_attr': {'class': 'form-label fw-bold'}}) }}
+            {{ form_widget(form.dateFin, {'attr': {'class': 'form-control'}}) }}
+            {{ form_errors(form.dateFin) }}
+            <small class="form-text text-muted">
+              <i class="bi bi-info-circle"></i> Laissez vide si événement ponctuel
+            </small>
+          </div>
+
+          <div class="mb-3">
+            {{ form_label(form.lieu, 'Lieu', {'label_attr': {'class': 'form-label fw-bold'}}) }}
+            {{ form_widget(form.lieu, {'attr': {'class': 'form-control', 'placeholder': 'Ex: Paris Convention Center, 123 Rue Example'}}) }}
+            {{ form_errors(form.lieu) }}
+          </div>
+        </div>
+
+        <div class="mb-4">
+          <h5 class="border-bottom pb-2 mb-3">
+            <i class="bi bi-image text-primary me-2"></i>Image de l'événement
+          </h5>
+          
+          {% if event.image %}
+            <div class="mb-3">
+              <label class="form-label fw-bold">Image actuelle</label>
+              <div class="border rounded p-2">
+                <img src="{{ asset('uploads/' ~ event.image) }}" alt="{{ event.titre }}" class="img-fluid rounded" style="max-height: 300px;">
+              </div>
+            </div>
+          {% endif %}
+
+          <div class="mb-3">
+            {{ form_label(form.imageFile, 'Changer l\'image', {'label_attr': {'class': 'form-label fw-bold'}}) }}
+            {{ form_widget(form.imageFile, {'attr': {'class': 'form-control'}}) }}
+            {{ form_errors(form.imageFile) }}
+            <small class="form-text text-muted">
+              <i class="bi bi-info-circle"></i> Formats acceptés: JPEG, PNG, WebP. Taille max: 5 Mo. Laissez vide pour conserver l'image actuelle.
+            </small>
+          </div>
+        </div>
+
+        <div class="d-flex gap-2">
+          <button type="submit" class="btn btn-primary">
+            <i class="bi bi-check-circle me-1"></i>Enregistrer les modifications
+          </button>
+          <a href="{{ path('app_my_events') }}" class="btn btn-outline-secondary">
+            <i class="bi bi-x-circle me-1"></i>Annuler
+          </a>
+        </div>
+
+        {{ form_end(form) }}
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}
