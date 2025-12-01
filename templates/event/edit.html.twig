@@ -66,15 +66,6 @@
           </div>
 
           <div class="mb-3">
-            {{ form_label(form.dateFin, 'Date et heure de fin (optionnelle)', {'label_attr': {'class': 'form-label fw-bold'}}) }}
-            {{ form_widget(form.dateFin, {'attr': {'class': 'form-control'}}) }}
-            {{ form_errors(form.dateFin) }}
-            <small class="form-text text-muted">
-              <i class="bi bi-info-circle"></i> Laissez vide si événement ponctuel
-            </small>
-          </div>
-
-          <div class="mb-3">
             {{ form_label(form.lieu, 'Lieu', {'label_attr': {'class': 'form-label fw-bold'}}) }}
             {{ form_widget(form.lieu, {'attr': {'class': 'form-control', 'placeholder': 'Ex: Paris Convention Center, 123 Rue Example'}}) }}
             {{ form_errors(form.lieu) }}
