@@ -45,6 +45,10 @@
                             </button>
                         </div>
                         {{ form_errors(registrationForm.plainPassword) }}
+                        <small class="form-text text-muted">
+                            <i class="bi bi-shield-check me-1"></i>
+                            Minimum 8 caractères avec au moins une majuscule, un chiffre et un caractère spécial (@$!%*?&#)
+                        </small>
                     </div>
 
                     <div class="mb-3">
@@ -63,10 +67,6 @@
                             </button>
                         </div>
                         {{ form_errors(registrationForm.confirmPassword) }}
-                        <small class="form-text text-muted">
-                            <i class="bi bi-info-circle me-1"></i>
-                            Minimum 8 caractères avec majuscule, chiffre et caractère spécial
-                        </small>
                     </div>
 
                     <div class="mb-4">
